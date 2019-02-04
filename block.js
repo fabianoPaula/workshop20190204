@@ -1,19 +1,9 @@
-
-var SHA256 = require("crypto-js/sha256");
-
-const zeroString = (size) => {
-	let text = ""; 
-	for (var i = 0; i < size; i++)
-    	text += "0";
-
-  	return text;
-}
-
+import { zerosString } from "./helper";
+import SHA256  from "crypto-js/sha256";
 
 export default class Block {
 
 	constructor(prevHash, txList) {
-
 		this.prevHash = prevHash;
 		this.txList = txList;
 		this.timestamp = Date.now();
@@ -27,13 +17,11 @@ export default class Block {
 
 	minerBlock(difficulty){
 		let hash = "wknefyugwefywieyf8wyefiwey";
-		let success = Array(difficulty+1).join("0");
+		let success = zerosString(difficulty);
 		let nonce = this.nonce;
 		while( hash.substring(0,difficulty) !== success){
 			hash = SHA256(`${this.prevHash}${this.timestamp}${JSON.stringify(this.txList)}${nonce}`).toString();
 			nonce += 1;
-			// console.log(hash);
-			// console.log(success);
 		}
 		this.nonce = nonce - 1;
 		this.hash = hash;

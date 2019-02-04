@@ -1,16 +1,9 @@
 import Transaction from "./transaction";
 import Block from "./block";
 import BlockChain from "./blockchain";
+import { zerosString } from "./helper";
 
-const genesisHash = (size) => {
-	let text = ""; 
-	for (var i = 0; i < size; i++)
-    	text += "0";
-
-  	return text;
-}
-
-let bc = new BlockChain(genesisHash(65), 3, "Felipe", 100)
+let bc = new BlockChain(zerosString(65), 3, "Felipe", 100)
 
 let t1 = new Transaction("rodrigo", "Fabiano", 1000)
 let t2 = new Transaction("Fabiano", "Felipe", 900)
